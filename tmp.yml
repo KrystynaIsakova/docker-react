@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t krystyna/docker-react -f Dockerfile.dev .
+
+
+script:
+  - docker run -e CI=true krystyna/docker-react npm run test
+
+  deploy:
+    provider: elasticbeanstalk
+    region: "us-east-1"
+    app: "kry-docker-react"
+    env: "Krydockerreact-env-1"
+    bucket_name: "elasticbeanstalk-us-east-1-455445909749"
+    bucket_path: "kry-docker-react"
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
