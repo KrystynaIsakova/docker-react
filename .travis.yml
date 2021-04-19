@@ -13,10 +13,10 @@ script:
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
-  app: "kry-docker-react"
-  env: "Krydockerreact-env-1"
+  app: "new-docker-react"
+  env: "Newdockerreact-env"
   bucket_name: "elasticbeanstalk-us-east-1-455445909749"
-  bucket_path: "kry-docker-react"
+  bucket_path: "new-docker-react"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
