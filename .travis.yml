@@ -1,23 +1,22 @@
-language: node_js
-
-node_js:
-  - "8"
-
 sudo: required
+language: generic
 
 services:
   - docker
-install:
-  - yarn
+
+before_install:
+  - docker build -t stephengrider/docker-react -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true stephengrider/docker-react npm run test
 
 deploy:
   provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
   region: "us-east-1"
   app: "frontend"
   env: "frontend-env"
   bucket_name: "elasticbeanstalk-us-east-1-455445909749"
-  bucket_path: "frontend"
   on:
     branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
